@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Hash;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -56,5 +57,10 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::needsRehash($password)
             ? Hash::make($password)
             : $password;
+    }
+
+    public function favoriteContents(): BelongsToMany
+    {
+        return $this->belongsToMany(Content::class, 'user_content')->as('favorites');
     }
 }
