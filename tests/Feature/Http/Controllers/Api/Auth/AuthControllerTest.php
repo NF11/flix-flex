@@ -39,7 +39,7 @@ class AuthControllerTest extends TestCase
     public function canRegisterAUserWithValidDetails()
     {
         $response = $this->json('post', 'api/auth/register', $this->payload);
-        $response->assertStatus(201);
+        $response->assertStatus(200);
         $this->assertEquals(1, User::count());
         $response->assertJsonStructure(['token_type', 'access_token', 'expires_in']);
 
