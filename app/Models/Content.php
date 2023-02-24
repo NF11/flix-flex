@@ -23,4 +23,16 @@ class Content extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function scopeWithFilter($query, ?string $keyword, ?string $type)
+    {
+        return $query
+            ->when($keyword, fn($q) => $q->where('title', 'LIKE', "%$keyword"))
+            ->when($type, fn($q) => $q->whereHas('category', fn($q) => $q->where('name', "$type")));
+    }
+
+    public function scopeTopRating($query)
+    {
+        return $query->orderBy('rating', 'DESC');
+    }
 }
