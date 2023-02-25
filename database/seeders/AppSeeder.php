@@ -21,7 +21,7 @@ class AppSeeder extends Seeder
         Category::create(['name' => CategoryName::MOVIE]);
         Category::create(['name' => CategoryName::SERIES]);
         Content::factory(20)->create();
-        $contents_id = Content::inRandomOrder()->limit(6)->pluck('id')->toArray();
+        $contents_id = Content::limit(6)->pluck('id')->toArray();
         $user->favoriteContents()->attach($contents_id);
 
     }

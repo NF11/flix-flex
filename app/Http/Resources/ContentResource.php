@@ -20,10 +20,10 @@ class ContentResource extends JsonResource
             'trailer_url' => $this->trailer_url,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-
             'category_id' => $this->category_id,
-
             'category' => new CategoryResource($this->whenLoaded('category')),
+            'is_favorites' => $this->when(!is_null($request->user()), fn() => $request->user()->isContentInFavorites($this->id))
+
         ];
     }
 }

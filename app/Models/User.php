@@ -61,6 +61,11 @@ class User extends Authenticatable
 
     public function favoriteContents(): BelongsToMany
     {
-        return $this->belongsToMany(Content::class, 'user_content')->as('favorites');
+        return $this->belongsToMany(Content::class, 'user_content', 'user_id', 'content_id')->as('favorites');
+    }
+
+    public function isContentInFavorites(int $contentId): bool
+    {
+        return $this->favoriteContents()->where('contents.id', $contentId)->exists();
     }
 }
