@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GetContentRequest;
 use App\Http\Resources\ContentResource;
 use App\Models\Content;
-use Illuminate\Http\Request;
 
 class ContentsController extends Controller
 {
@@ -17,20 +16,9 @@ class ContentsController extends Controller
         return ContentResource::collection($content);
     }
 
-    public function store(Request $request)
-    {
-    }
-
     public function show(Content $content)
     {
-    }
-
-    public function update(Request $request, Content $content)
-    {
-    }
-
-    public function destroy(Content $content)
-    {
+        return new ContentResource($content->load('category'));
     }
 
     public function getTopRating(GetContentRequest $request)
@@ -38,7 +26,8 @@ class ContentsController extends Controller
         $topContent = Content::withFilter(keyword: $request->get('q'), type: $request->get('type'))
             ->topRating()
             ->with('category')
-            ->limit(config('content.top_limit'));
+            ->limit(config('content.top_limit'))
+            ->get();
         return ContentResource::collection($topContent);
     }
 }

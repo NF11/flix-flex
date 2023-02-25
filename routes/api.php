@@ -21,9 +21,6 @@ Route::group(['prefix' => 'auth'], function () {
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::group(['prefix' => 'contents'], function () {
-        Route::get('top', [ContentsController::class, 'getTopRating']);
-        Route::resource('/', ContentsController::class);
-
-    });
+    Route::get('contents/top', [ContentsController::class, 'getTopRating']);
+    Route::resource('contents', ContentsController::class)->only(['index', 'show']);
 });
