@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    /**
+     * @LRDparam username string|required
+     * @LRDparam password string|required
+     * @LRDparam responses 200,401
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -25,6 +30,11 @@ class AuthController extends Controller
         return new LoginSuccessResponse($user);
     }
 
+    /**
+     * @LRDparam username string|required
+     * @LRDparam password string|required
+     * @LRDparam responses 200,401
+     */
     public function register(Request $request)
     {
         $request->validate([
